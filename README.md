@@ -122,13 +122,4 @@ You can test endpoints directly from this UI.
 }
 ```
 
----
-
-##  Future Enhancements
-
-* Authentication & Authorization (JWT)
-* Pagination & Filtering for movie listing
-* Docker support for containerization
-
----
 
