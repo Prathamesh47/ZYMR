@@ -67,7 +67,7 @@ Using Maven:
 mvn spring-boot:run
 ```
 
-Or run the `MovieMgmtApplication` class from your IDE.
+Or run the `MovieManagementApplication` class from your IDE.
 
 ---
 
