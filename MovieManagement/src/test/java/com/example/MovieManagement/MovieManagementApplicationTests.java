@@ -1,4 +1,4 @@
-package com.example.MovieManagementTest;
+package com.example.MovieManagement;
 
 import com.example.MovieManagement.controller.MovieController;
 import com.example.MovieManagement.service.MovieService;
