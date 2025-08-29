@@ -20,12 +20,12 @@ It follows a layered architecture (**Controller → Service → Repository**) an
 
 ```
 movie-management/
-├── controller/      # REST Controllers (API Endpoints)
-├── service/         # Business Logic Layer
-├── repository/      # DAO Layer (MongoRepository)
-├── model/           # Entity classes (Movie)
-├── exception/       # Custom exceptions
-└── test/            # Unit tests
+├── controller/     
+├── service/         
+├── repository/      
+├── model/          
+├── exception/       
+└── test/            
 ```
 
 ---
@@ -90,7 +90,7 @@ This runs:
 
 Once the application is running, Swagger UI will be available at:
 
-👉 [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
+ [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
 
 You can test endpoints directly from this UI.
 
