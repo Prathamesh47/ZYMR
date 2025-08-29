@@ -123,9 +123,9 @@ You can test endpoints directly from this UI.
 ```
 
 ```markdown
-# Movie Management - Docker Setup Guide
+ Movie Management - Docker Setup Guide
 
-## Step 1: Package Your Spring Boot App
+ Step 1: Package Your Spring Boot App
 
 Before Dockerizing, build your app as a JAR.
 
