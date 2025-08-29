@@ -35,11 +35,9 @@ public class MovieService {
 
     public Movie updateMovie(String id, Movie movie) {
         Movie existing = getMovieById(id);
-
-        // Prevent updating to a duplicate
         movieRepository.findByTitleAndReleaseYear(movie.getTitle(), movie.getReleaseYear())
                 .ifPresent(m -> {
-                    if (!m.getId().equals(id)) { // check different id
+                    if (!m.getId().equals(id)) {
                         throw new IllegalArgumentException("Another movie with same title & year exists!");
                     }
                 });
