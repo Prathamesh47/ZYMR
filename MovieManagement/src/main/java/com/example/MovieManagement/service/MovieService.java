@@ -1,11 +1,11 @@
-package com.example.MovieManagement .service;
+package com.example.MovieManagement.service;
 
-import com.example.MovieManagement.exception.ResourceNotFoundException;
 import com.example.MovieManagement.model.Movie;
 import com.example.MovieManagement.repository.MovieRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class MovieService {
@@ -22,27 +22,36 @@ public class MovieService {
 
     public Movie getMovieById(String id) {
         return movieRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Movie not found with id " + id));
+                .orElseThrow(() -> new NoSuchElementException("Movie not found with ID: " + id));
     }
 
     public Movie createMovie(Movie movie) {
+        movieRepository.findByTitleAndYear(movie.getTitle(), movie.getReleaseYear())
+                .ifPresent(m -> {
+                    throw new IllegalArgumentException("Movie already exists: " + movie.getTitle());
+                });
         return movieRepository.save(movie);
     }
 
-    public Movie updateMovie(String id, Movie movieDetails) {
-        Movie movie = getMovieById(id);
+    public Movie updateMovie(String id, Movie movie) {
+        Movie existing = getMovieById(id);
 
-        movie.setTitle(movieDetails.getTitle());
-        movie.setDirector(movieDetails.getDirector());
-        movie.setReleaseYear(movieDetails.getReleaseYear());
-        movie.setGenre(movieDetails.getGenre());
-        movie.setRating(movieDetails.getRating());
+        // Prevent updating to a duplicate
+        movieRepository.findByTitleAndYear(movie.getTitle(), movie.getReleaseYear())
+                .ifPresent(m -> {
+                    if (!m.getId().equals(id)) { // check different id
+                        throw new IllegalArgumentException("Another movie with same title & year exists!");
+                    }
+                });
 
-        return movieRepository.save(movie);
+        existing.setTitle(movie.getTitle());
+        existing.setReleaseYear(movie.getReleaseYear());
+        existing.setGenre(movie.getGenre());
+
+        return movieRepository.save(existing);
     }
 
     public void deleteMovie(String id) {
-        Movie movie = getMovieById(id);
-        movieRepository.delete(movie);
+        movieRepository.deleteById(id);
     }
 }
