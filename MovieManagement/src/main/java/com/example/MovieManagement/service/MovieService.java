@@ -26,7 +26,7 @@ public class MovieService {
     }
 
     public Movie createMovie(Movie movie) {
-        movieRepository.findByTitleAndYear(movie.getTitle(), movie.getReleaseYear())
+        movieRepository.findByTitleAndReleaseYear(movie.getTitle(), movie.getReleaseYear())
                 .ifPresent(m -> {
                     throw new IllegalArgumentException("Movie already exists: " + movie.getTitle());
                 });
@@ -37,7 +37,7 @@ public class MovieService {
         Movie existing = getMovieById(id);
 
         // Prevent updating to a duplicate
-        movieRepository.findByTitleAndYear(movie.getTitle(), movie.getReleaseYear())
+        movieRepository.findByTitleAndReleaseYear(movie.getTitle(), movie.getReleaseYear())
                 .ifPresent(m -> {
                     if (!m.getId().equals(id)) { // check different id
                         throw new IllegalArgumentException("Another movie with same title & year exists!");
