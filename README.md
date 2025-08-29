@@ -127,7 +127,7 @@ You can test endpoints directly from this UI.
 
 ## Step 1: Package Your Spring Boot App
 
-Before Dockerizing, build your app as a **JAR**:
+Before Dockerizing, build your app as a JAR.
 
 ```bash
 mvn clean package
