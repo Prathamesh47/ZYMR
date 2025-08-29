@@ -122,4 +122,118 @@ You can test endpoints directly from this UI.
 }
 ```
 
+```markdown
+# Movie Management - Docker Setup Guide
+
+## Step 1: Package Your Spring Boot App
+
+Before Dockerizing, build your app as a **JAR**:
+
+```bash
+mvn clean package
+```
+
+* This will create a JAR in the `target/` folder, e.g., `movie-management-0.0.1-SNAPSHOT.jar`.
+* Make sure your `application.properties` or `application.yml` is configured properly (like MongoDB URI if using an external DB).
+
+---
+
+## Step 2: Create a Dockerfile
+
+At the root of your project (same level as `pom.xml`), create a file named **Dockerfile**:
+
+```dockerfile
+# Step 1: Use a base image with Java 17
+FROM eclipse-temurin:17-jdk-alpine
+
+# Step 2: Set a working directory inside the container
+WORKDIR /app
+
+# Step 3: Copy the JAR file into the container
+COPY target/movie-management-0.0.1-SNAPSHOT.jar app.jar
+
+# Step 4: Expose the port the app will run on
+EXPOSE 8080
+
+# Step 5: Run the Spring Boot app
+ENTRYPOINT ["java","-jar","app.jar"]
+```
+
+**Notes:**
+
+* `eclipse-temurin:17-jdk-alpine` is a lightweight JDK image.
+* Port `8080` is the default Spring Boot port; change it if you configured a different port.
+
+---
+
+## Step 3: Build Docker Image
+
+Run this command from the project root:
+
+```bash
+docker build -t movie-management:1.0 .
+```
+
+* `-t` assigns a name and tag to the image.
+* `.` tells Docker to use the Dockerfile in the current directory.
+
+---
+
+## Step 4: Run Docker Container
+
+```bash
+docker run -p 8080:8080 --name movie-management-app movie-management:1.0
+```
+
+* `-p 8080:8080` maps container port `8080` to host port `8080`.
+* `--name` assigns a custom container name to avoid random names.
+* Your app should now be accessible at [http://localhost:8080](http://localhost:8080).
+
+---
+
+## Step 5: Optional – Use Docker Compose (MongoDB + App)
+
+Create a `docker-compose.yml` if you want to run **MongoDB and Spring Boot together**:
+
+```yaml
+version: '3.8'
+services:
+  mongo:
+    image: mongo:7.0
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+
+  app:
+    build: .
+    container_name: movie-management-app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongo
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://root:root@mongo:27017/admin
+```
+
+Run both services:
+
+```bash
+docker-compose up --build
+```
+
+* This will start MongoDB and your Spring Boot app together.
+
+---
+
+## Step 6: Verify
+
+* Open your browser: [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html) → Swagger docs should load.
+* Your endpoints are now fully accessible via Docker.
+
+---
+
+```
 
