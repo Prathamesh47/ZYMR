@@ -7,7 +7,7 @@ It follows a layered architecture (**Controller -> Service -> Repository**) and 
 
 ##  Tech Stack
 
-* **Backend Framework:** Spring Boot 3.x
+* **Backend Framework:** Spring Boot
 * **Database:** MongoDB (NoSQL)
 * **Data Access:** Spring Data MongoDB (MongoRepository)
 * **Validation:** Jakarta Bean Validation (JSR 380)
@@ -187,11 +187,10 @@ docker run -p 8080:8080 --name movie-management-app movie-management:1.0
 
 * `-p 8080:8080` maps container port `8080` to host port `8080`.
 * `--name` assigns a custom container name to avoid random names.
-* Your app should now be accessible at [http://localhost:8080](http://localhost:8080).
 
 ---
 
-## Step 5: Optional – Use Docker Compose (MongoDB + App)
+## Step 5: Use Docker Compose (MongoDB + App)
 
 Create a `docker-compose.yml` if you want to run **MongoDB and Spring Boot together**:
 
