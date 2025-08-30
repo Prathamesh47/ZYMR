@@ -8,6 +8,14 @@ import java.util.UUID;
 
 @Document(collection = "movies")
 public class Movie {
+    public Movie(String id, String title, String director, int releaseYear, String genre, double rating) {
+        this.id = id;
+        this.title = title;
+        this.director = director;
+        this.releaseYear = releaseYear;
+        this.genre = genre;
+        this.rating = rating;
+    }
 
     @Id
     private String id = UUID.randomUUID().toString();

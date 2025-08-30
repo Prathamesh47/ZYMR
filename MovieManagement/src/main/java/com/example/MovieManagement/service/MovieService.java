@@ -6,11 +6,16 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 @Service
 public class MovieService {
 
     private final MovieRepository movieRepository;
+
+    public Page<Movie> getMoviesPaginated(Pageable pageable) {
+        return movieRepository.findAll(pageable);
+    }
 
     public MovieService(MovieRepository movieRepository) {
         this.movieRepository = movieRepository;

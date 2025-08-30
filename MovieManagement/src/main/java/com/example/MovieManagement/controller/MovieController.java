@@ -3,13 +3,15 @@ package com.example.MovieManagement.controller;
 import com.example.MovieManagement.model.Movie;
 import com.example.MovieManagement.service.MovieService;
 import io.swagger.v3.oas.annotations.Operation;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 @RestController
 @RequestMapping("/movies")
 public class MovieController {
@@ -20,10 +22,14 @@ public class MovieController {
         this.movieService = movieService;
     }
 
-    @Operation(summary = "Get all movies")
+    @Operation(summary = "Get all movies with pagination")
     @GetMapping
-    public List<Movie> getAllMovies() {
-        return movieService.getAllMovies();
+    public Page<Movie> getAllMovies(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+        Pageable pageable = PageRequest.of(page, size);
+        return movieService.getMoviesPaginated(pageable);
     }
 
     @Operation(summary = "Get movie by ID")
