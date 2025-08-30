@@ -1,7 +1,7 @@
 ##  Movie Management API
 
 A backend project built with **Spring Boot** and **MongoDB** that provides CRUD operations for managing movies.
-It follows a layered architecture (**Controller → Service → Repository**) and includes **Swagger/OpenAPI documentation** and **unit testing**.
+It follows a layered architecture (**Controller -> Service -> Repository**) and includes **Swagger/OpenAPI documentation** and **unit testing**.
 
 ---
 
