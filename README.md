@@ -236,4 +236,5 @@ docker-compose up --build
 ---
 
 ```
+* Added pagination to GET /movies
 
